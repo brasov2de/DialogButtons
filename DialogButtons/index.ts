@@ -2,12 +2,14 @@ import {IInputs, IOutputs} from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { ButtonBar, IButtonBarProps } from "./App/ButtonBar";
+import { TeachingBubbleBase } from "@fluentui/react";
 
 export class DialogButtons implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
 	private notifyOutputChanged: () => void
 	private container: HTMLDivElement;
-	//private allOptions : ComponentFramework.PropertyHelper.OptionMetadata[];
+	private value : number | undefined;
+	
 	/**
 	 * Empty constructor.
 	 */
@@ -16,10 +18,24 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 
 	}
 
+	
+	private setValue(value : number |undefined){
+		this.notifyOutputChanged();
+		window.setTimeout( () => {
+			value = undefined;
+			this.notifyOutputChanged();
+		}, 10);
 
-	private renderControl(context: ComponentFramework.Context<IInputs>){
+	}
+
+	private renderControl(context: ComponentFramework.Context<IInputs>){		
 		const props : IButtonBarProps = {
-			options : context.parameters.buttons.attributes?.Options ?? []
+			options : context.parameters.buttons.attributes?.Options ?? [], 
+			setValue: this.setValue, 
+			enabledButtons : (context.parameters.enabledButtons?.raw ?? "").split(";").map((val): number => parseInt(val, 10)), 
+			visibleButtons : (context.parameters.visibleButtons?.raw ?? "").split(";").map((val): number => parseInt(val, 10)), 
+			icons :  JSON.parse(context.parameters.icons?.raw ?? '{"1": "CircleShapeSolid"}'), 
+			align : context.parameters.align?.raw
 		}
 		ReactDOM.render(React.createElement(ButtonBar, props), this.container);
 	}
@@ -55,7 +71,9 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 	 */
 	public getOutputs(): IOutputs
 	{
-		return {};
+		return {
+			buttons: this.value
+		};
 	}
 
 	/** 

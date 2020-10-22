@@ -7,9 +7,9 @@
     <property name="enabledButtons" display-name-key="Enabled buttons" description-key="The buttons that should be enabled" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="icons" display-name-key="Icons" description-key="The icons for the buttons" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="align" display-name-key="Align" description-key="Align" of-type="Enum" usage="input" required="true">
-      <value name="RIGHT" display-name-key="Right" description-key="Right" default="true">Right</value>
-      <value name="CENTER" display-name-key="Center" description-key="Center">Center</value>
-      <value name="LEFT" display-name-key="Left" description-key="Left">Left</value>      
+      <value name="Right" display-name-key="Right" description-key="Right" default="true">RIGHT</value>
+      <value name="Center" display-name-key="Center" description-key="Center">CENTER</value>
+      <value name="Left" display-name-key="Left" description-key="Left">LEFT</value>      
     </property>   
     <resources>
       <code path="index.ts" order="1"/>
