@@ -24,17 +24,20 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 		window.setTimeout( () => {
 			value = undefined;
 			this.notifyOutputChanged();
-		}, 10);
+		}, 100);
 
 	}
 
 	private renderControl(context: ComponentFramework.Context<IInputs>){		
+		const enabled = context.parameters.enabledButtons?.raw;
+		const visible = context.parameters.visibleButtons?.raw;
 		const props : IButtonBarProps = {
 			options : context.parameters.buttons.attributes?.Options ?? [], 
 			setValue: this.setValue, 
-			enabledButtons : (context.parameters.enabledButtons?.raw ?? "").split(";").map((val): number => parseInt(val, 10)), 
-			visibleButtons : (context.parameters.visibleButtons?.raw ?? "").split(";").map((val): number => parseInt(val, 10)), 
+			enabledButtons : enabled == null ? undefined : enabled.split(";").map((val): number => parseInt(val, 10)), 
+			visibleButtons : visible == null ? undefined : visible.split(";").map((val): number => parseInt(val, 10)), 
 			icons :  JSON.parse(context.parameters.icons?.raw ?? '{"1": "CircleShapeSolid"}'), 
+			useOptionsColor : context.parameters.useOptionsColor?.raw,
 			align : context.parameters.align?.raw
 		}
 		ReactDOM.render(React.createElement(ButtonBar, props), this.container);

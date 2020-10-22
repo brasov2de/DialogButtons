@@ -11,6 +11,10 @@
       <value name="Center" display-name-key="Center" description-key="Center">CENTER</value>
       <value name="Left" display-name-key="Left" description-key="Left">LEFT</value>      
     </property>   
+    <property name="useOptionsColor" display-name-key="Use options color" description-key="Use options color" of-type="Enum" usage="input" required="true">
+      <value name="No" display-name-key="No" description-key="No" default="true">NO</value>
+      <value name="Yes" display-name-key="Yes" description-key="Yes">YES</value>      
+    </property>   
     <resources>
       <code path="index.ts" order="1"/>
       <!-- UNCOMMENT TO ADD MORE RESOURCES
