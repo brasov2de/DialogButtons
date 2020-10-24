@@ -19,23 +19,26 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 	}
 
 	
-	private setValue(value : number |undefined){
+	private setValue = (value : number |undefined) => {
+		this.value = value;
 		this.notifyOutputChanged();
-		window.setTimeout( () => {
-			value = undefined;
-			this.notifyOutputChanged();
-		}, 100);
+		if(value!=null){
+			window.setTimeout( () => {
+				this.setValue(undefined);
+			}, 1000);
+		}
 
 	}
 
+
 	private renderControl(context: ComponentFramework.Context<IInputs>){		
-		const enabled = context.parameters.enabledButtons?.raw;
+		const disabled = context.parameters.disabledButtons?.raw;
 		const visible = context.parameters.visibleButtons?.raw;
 		const props : IButtonBarProps = {
 			options : context.parameters.buttons.attributes?.Options ?? [], 
 			setValue: this.setValue, 
-			enabledButtons : enabled == null ? undefined : enabled.split(";").map((val): number => parseInt(val, 10)), 
-			visibleButtons : visible == null ? undefined : visible.split(";").map((val): number => parseInt(val, 10)), 
+			disabledButtons : context.parameters.disabledButtons?.raw, 
+			visibleButtons : context.parameters.visibleButtons?.raw,
 			icons :  JSON.parse(context.parameters.icons?.raw ?? '{"1": "CircleShapeSolid"}'), 
 			useOptionsColor : context.parameters.useOptionsColor?.raw,
 			align : context.parameters.align?.raw
@@ -54,6 +57,7 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container:HTMLDivElement)
 	{
 		this.container = container;
+		this.notifyOutputChanged = notifyOutputChanged;
 		this.renderControl(context);
 	}
 
