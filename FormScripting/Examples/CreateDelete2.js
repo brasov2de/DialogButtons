@@ -22,3 +22,18 @@ function Dianamics_CreateDelete_Onload(executionContext){
 
 
 }
+
+/*
+Xrm.Navigation.navigateTo({
+    pageType: "entityrecord", 
+    entityName: "orb_dialog", 
+    entityId: "83BD09D6-930D-EB11-A813-000D3A23CB53", 
+    formId:"18BCC641-5D5E-433C-8106-C4099F4C9962", 
+    createdFromEntity: {entityType: "orb_testentity", id: Xrm.Page.data.entity.getId(), name: "dummy"}
+}, {
+    target: 2, 
+    width: 600, 
+    height: 350, 
+    position: 1}
+).then(console.log, console.error);
+*/

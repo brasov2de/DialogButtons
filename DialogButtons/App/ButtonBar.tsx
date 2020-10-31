@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {DefaultButton } from '@fluentui/react/lib/Button';
 import {Stack} from '@fluentui/react/lib/Stack';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+import {DefaultButton } from '@fluentui/react/lib/Button';
+import { ButtonBarElement } from './ButtonBarElement';
 
 
 export interface IButtonBarProps{
@@ -32,14 +33,16 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
     const visibleBtns = parseButtonsInput(visibleButtons);
    
     return <Stack horizontal wrap horizontalAlign={align==="LEFT" ? "start" : (align==="CENTER" ? "center" : "end" ) } tokens={{childrenGap: "1%", padding: "5px"}} style={{marginTop: "20px"}}>
-        {options.map((option) => ( visibleBtns === undefined || visibleBtns.includes(option.Value)) ?
-         <DefaultButton key={option.Value} primary
-            text={`${option.Label}`}
-            style={{backgroundColor: useOptionsColor==="YES" ? option.Color : undefined}}
-            iconProps={ {iconName: icons[option.Value]}}
-            onClick={() => setValue(option.Value)}
-            disabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)}
-            />    
+        {options.map((option) => ( visibleBtns === undefined || visibleBtns.includes(option.Value)) ?   
+        <ButtonBarElement   
+            key={option.Value}         
+            label={option.Label}
+            value = {option.Value}
+            setValue={setValue}
+            color={useOptionsColor==="YES" ? option.Color : undefined}
+            iconName={icons[option.Value]}
+            isDisabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)} 
+        />
             : undefined
         )}
     </Stack>

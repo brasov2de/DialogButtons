@@ -58,7 +58,7 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 	{
 		this.container = container;
 		this.notifyOutputChanged = notifyOutputChanged;
-		this.renderControl(context);
+		//this.renderControl(context);
 	}
 
 
