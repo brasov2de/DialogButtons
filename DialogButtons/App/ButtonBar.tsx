@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Stack} from '@fluentui/react/lib/Stack';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
-import {DefaultButton } from '@fluentui/react/lib/Button';
-import { ButtonBarElement } from './ButtonBarElement';
+import {DefaultButton } from '@fluentui/react/lib/Button'; 
 
 
 export interface IButtonBarProps{
@@ -14,6 +13,8 @@ export interface IButtonBarProps{
     useOptionsColor: "YES" | "NO";
     setValue: (value : number |undefined) => void;    
 }
+
+
 
 initializeIcons();
 
@@ -33,18 +34,49 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
     const visibleBtns = parseButtonsInput(visibleButtons);
    
     return <Stack horizontal wrap horizontalAlign={align==="LEFT" ? "start" : (align==="CENTER" ? "center" : "end" ) } tokens={{childrenGap: "1%", padding: "5px"}} style={{marginTop: "20px"}}>
-        {options.map((option) => ( visibleBtns === undefined || visibleBtns.includes(option.Value)) ?   
-        <ButtonBarElement   
-            key={option.Value}         
-            label={option.Label}
-            value = {option.Value}
-            setValue={setValue}
-            color={useOptionsColor==="YES" ? option.Color : undefined}
-            iconName={icons[option.Value]}
-            isDisabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)} 
-        />
-            : undefined
-        )}
+        {options.map((option) => {
+             const handleClick = React.useCallback(() => {
+                setValue(option.Value);
+            },[]);
+            const getStyles = (color : string | undefined, primary: boolean) => {
+                if(color===undefined){
+                    return undefined;
+                }
+                return {   
+                    root: { 
+                        backgroundColor: primary===true ? color : "white" ,
+                        color: primary === true ? undefined : color,
+                        borderColor: color,  
+                       
+                    }, 
+                    rootHovered: {         
+                            backgroundColor: primary === true ? color : "white"  ,               
+                            color: primary === true ? undefined : color,
+                            borderColor: color ,
+                            filter: "brightness(75%)"
+                    }
+                }
+            }
+            if( visibleBtns === undefined || visibleBtns.includes(option.Value)) {
+                let primary = true;
+                let color : string | undefined = useOptionsColor==="YES" ?  option.Color : undefined;
+                if(useOptionsColor==="YES" && option.Color?.toLowerCase()==="#ffffff" || option.Color?.toLowerCase()==="white"){
+                    primary=false;
+                    color = "#3B79B7";
+                }
+                return <DefaultButton primary
+                    key={option.Value}         
+                    text={option.Label}
+                    value = {option.Value}            
+                    onClick={handleClick}                                                      
+                    styles={getStyles(color ?? "#3B79B7", primary)}
+                    iconProps={ {iconName: icons[option.Value]}}                          
+                    disabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)}
+                />
+            }
+            return undefined;
+        })
+    }
     </Stack>
 }, (prevProps, newProps) => {
     return prevProps.options === newProps.options 
