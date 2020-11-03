@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Stack} from '@fluentui/react/lib/Stack';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import {DefaultButton } from '@fluentui/react/lib/Button'; 
+import { useColors } from './useColors';
 
 
 
@@ -13,13 +14,14 @@ export interface IButtonBarProps{
     align: "RIGHT" | "CENTER" | "LEFT";
     useOptionsColor: "YES" | "NO";
     setValue: (value : number |undefined) => void;    
+    webAPI : ComponentFramework.WebApi ;
 }
 
 
 
 initializeIcons();
 
-export const ButtonBar = React.memo(function ButtonBarComponent({options, visibleButtons, disabledButtons, icons, align,useOptionsColor, setValue}: IButtonBarProps ) : JSX.Element{
+export const ButtonBar = React.memo(function ButtonBarComponent({options, visibleButtons, disabledButtons, icons, align,useOptionsColor, setValue, webAPI}: IButtonBarProps ) : JSX.Element{
     const parseButtonsInput = (input : string | null) : (number | undefined) [] |undefined => {
         if(input == null) {
             return undefined;
@@ -39,6 +41,7 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
              const handleClick = React.useCallback(() => {
                 setValue(option.Value);
             },[]);
+            const mainColor = useColors(webAPI)?.mainColor;
             const getStyles = (color : string | undefined, primary: boolean) => {
                 if(color===undefined){
                     return undefined;
@@ -71,14 +74,14 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                 let color : string | undefined = useOptionsColor==="YES" ?  option.Color : undefined;
                 if(useOptionsColor==="YES" && option.Color?.toLowerCase()==="#ffffff" || option.Color?.toLowerCase()==="white"){
                     primary=false;
-                    color = "#3B79B7";
+                    color = mainColor;
                 }
                 return <DefaultButton primary
                     key={option.Value}         
                     text={option.Label}
                     value = {option.Value}            
                     onClick={handleClick}                               
-                    styles={getStyles(color ?? "#3B79B7", primary)}
+                    styles={getStyles(color ?? mainColor, primary)}
                     iconProps={ {iconName: icons[option.Value]}}                          
                     disabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)}
                 />

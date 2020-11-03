@@ -41,7 +41,8 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 			visibleButtons : context.parameters.visibleButtons?.raw,
 			icons :  JSON.parse(context.parameters.icons?.raw ?? '{"1": "CircleShapeSolid"}'), 
 			useOptionsColor : context.parameters.useOptionsColor?.raw,
-			align : context.parameters.align?.raw
+			align : context.parameters.align?.raw, 
+			webAPI : context.webAPI
 		}
 		ReactDOM.render(React.createElement(ButtonBar, props), this.container);
 	}
