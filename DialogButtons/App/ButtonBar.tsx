@@ -4,6 +4,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import {DefaultButton } from '@fluentui/react/lib/Button'; 
 
 
+
 export interface IButtonBarProps{
     options: ComponentFramework.PropertyHelper.OptionMetadata[];
     visibleButtons: string |null;
@@ -42,19 +43,27 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                 if(color===undefined){
                     return undefined;
                 }
+                const baseStyle = {
+                    backgroundColor: primary===true ? color : "white" ,
+                    color: primary === true ? undefined : color,
+                    borderColor: color
+                }
                 return {   
                     root: { 
-                        backgroundColor: primary===true ? color : "white" ,
-                        color: primary === true ? undefined : color,
-                        borderColor: color,  
-                       
-                    }, 
-                    rootHovered: {         
-                            backgroundColor: primary === true ? color : "white"  ,               
-                            color: primary === true ? undefined : color,
-                            borderColor: color ,
-                            filter: "brightness(75%)"
+                       ...baseStyle                        
+                    },                     
+                    rootHovered: {                         
+                           ...baseStyle,
+                            filter: "brightness(85%)",
+                            selectors: {
+                                ":active": {  
+                                    ...baseStyle,
+                                    filter: "brightness(75%)",
+                                }
+                            }
+
                     }
+                   
                 }
             }
             if( visibleBtns === undefined || visibleBtns.includes(option.Value)) {
@@ -68,7 +77,7 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                     key={option.Value}         
                     text={option.Label}
                     value = {option.Value}            
-                    onClick={handleClick}                                                      
+                    onClick={handleClick}                               
                     styles={getStyles(color ?? "#3B79B7", primary)}
                     iconProps={ {iconName: icons[option.Value]}}                          
                     disabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)}
