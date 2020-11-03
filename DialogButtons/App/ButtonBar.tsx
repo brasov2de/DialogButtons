@@ -10,6 +10,7 @@ export interface IButtonBarProps{
     options: ComponentFramework.PropertyHelper.OptionMetadata[];
     visibleButtons: string |null;
     disabledButtons:string | null;
+    whiteButtons: string | null;
     icons : any;
     align: "RIGHT" | "CENTER" | "LEFT";
     useOptionsColor: "YES" | "NO";
@@ -21,7 +22,7 @@ export interface IButtonBarProps{
 
 initializeIcons();
 
-export const ButtonBar = React.memo(function ButtonBarComponent({options, visibleButtons, disabledButtons, icons, align,useOptionsColor, setValue, webAPI}: IButtonBarProps ) : JSX.Element{
+export const ButtonBar = React.memo(function ButtonBarComponent({options, visibleButtons, disabledButtons, whiteButtons, icons, align,useOptionsColor, setValue, webAPI}: IButtonBarProps ) : JSX.Element{
     const parseButtonsInput = (input : string | null) : (number | undefined) [] |undefined => {
         if(input == null) {
             return undefined;
@@ -35,6 +36,7 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
 
     const disabledBtns = parseButtonsInput(disabledButtons);
     const visibleBtns = parseButtonsInput(visibleButtons);
+    const whiteBtns = parseButtonsInput(whiteButtons)
    
     return <Stack horizontal wrap horizontalAlign={align==="LEFT" ? "start" : (align==="CENTER" ? "center" : "end" ) } tokens={{childrenGap: "1%", padding: "5px"}} style={{marginTop: "20px"}}>
         {options.map((option) => {
@@ -47,13 +49,17 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                     return undefined;
                 }
                 const baseStyle = {
+                    backgroundColor: color ,                    
+                    borderColor: color
+                }
+                const baseStyleOrWhite = {
                     backgroundColor: primary===true ? color : "white" ,
                     color: primary === true ? undefined : color,
                     borderColor: color
                 }
                 return {   
                     root: { 
-                       ...baseStyle                        
+                       ...baseStyleOrWhite                        
                     },                     
                     rootHovered: {                         
                            ...baseStyle,
@@ -72,7 +78,7 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
             if( visibleBtns === undefined || visibleBtns.includes(option.Value)) {
                 let primary = true;
                 let color : string | undefined = useOptionsColor==="YES" ?  option.Color : undefined;
-                if(useOptionsColor==="YES" && option.Color?.toLowerCase()==="#ffffff" || option.Color?.toLowerCase()==="white"){
+                if(whiteBtns?.includes(option.Value) || useOptionsColor==="YES" && option.Color?.toLowerCase()==="#ffffff" || option.Color?.toLowerCase()==="white"){
                     primary=false;
                     color = mainColor;
                 }
@@ -93,5 +99,6 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
 }, (prevProps, newProps) => {
     return prevProps.options === newProps.options 
     && prevProps.disabledButtons === newProps.disabledButtons
-    && prevProps.visibleButtons === newProps.visibleButtons        
+    && prevProps.visibleButtons === newProps.visibleButtons       
+    && prevProps.whiteButtons === newProps.whiteButtons 
 })

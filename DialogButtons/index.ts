@@ -33,7 +33,7 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 
 	private renderControl(context: ComponentFramework.Context<IInputs>){		
 		const disabled = context.parameters.disabledButtons?.raw;
-		const visible = context.parameters.visibleButtons?.raw;
+		const visible = context.parameters.visibleButtons?.raw;		
 		const props : IButtonBarProps = {
 			options : context.parameters.buttons.attributes?.Options ?? [], 
 			setValue: this.setValue, 
@@ -42,7 +42,8 @@ export class DialogButtons implements ComponentFramework.StandardControl<IInputs
 			icons :  JSON.parse(context.parameters.icons?.raw ?? '{"1": "CircleShapeSolid"}'), 
 			useOptionsColor : context.parameters.useOptionsColor?.raw,
 			align : context.parameters.align?.raw, 
-			webAPI : context.webAPI
+			webAPI : context.webAPI, 
+			whiteButtons : context.parameters.whiteButtons?.raw
 		}
 		ReactDOM.render(React.createElement(ButtonBar, props), this.container);
 	}

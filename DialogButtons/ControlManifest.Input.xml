@@ -5,7 +5,8 @@
     <property name="buttons" display-name-key="Buttons" description-key="Options for the buttons" of-type="OptionSet" usage="bound" required="true" />  
     <property name="visibleButtons" display-name-key="Visible buttons" description-key="The buttons that should be visible" of-type="SingleLine.Text" usage="input" required="false" />
     <property name="disabledButtons" display-name-key="Disabled buttons" description-key="The buttons that should be disabled" of-type="SingleLine.Text" usage="input" required="false" />
-    <property name="icons" display-name-key="Icons" description-key="The icons for the buttons" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="whiteButtons" display-name-key="White buttons" description-key="The values for the buttons beeing shown in with white background" of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="icons" display-name-key="Icons" description-key="The icons for the buttons" of-type="SingleLine.Text" usage="input" required="false" />    
     <property name="align" display-name-key="Align" description-key="Align" of-type="Enum" usage="input" required="true">
       <value name="Right" display-name-key="Right" description-key="Right" default="true">RIGHT</value>
       <value name="Center" display-name-key="Center" description-key="Center">CENTER</value>
