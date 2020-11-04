@@ -39,3 +39,6 @@ Xrm.Navigation.navigateTo({
     position: 1
 }).then(console.log, console.error)
 */
+/*
+Xrm.Navigation.openForm({entityName: "orb_dialog", entityId: "83BD09D6-930D-EB11-A813-000D3A23CB53",  formId:"830FB574-F340-40E6-AD64-93B2033A1C6E", height: 800, width: 800, navBar: "off", windowPosition: "center", openInNewWindow: false})
+ */
