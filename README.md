@@ -1,6 +1,6 @@
 # Dialog Buttons
 
-A PCF to allow a little more flexibility to define buttons on a form. The target is to bring more flexibility to the Form used as Dialogs (as explained in my blog Transform Forms into Dialogs and more..." (https://dianabirkelbach.wordpress.com/2020/10/14/transform-forms-into-dialogs-and-more/)
+A PCF to define one or more buttons on a form. It should bring some more flexibility to the forms transformed in dialogs, as explained in my blog "Transform Forms into Dialogs and more..." (https://dianabirkelbach.wordpress.com/2020/10/14/transform-forms-into-dialogs-and-more/)
 ![main](./Docs/imgs/Main.png)
 
 
