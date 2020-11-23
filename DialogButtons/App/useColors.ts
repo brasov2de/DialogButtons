@@ -4,7 +4,7 @@ const STORAGE_KEY = "ORBIS.PCF.MainColor";
 
 export const useColors = (webAPI: ComponentFramework.WebApi) => {
     
-    const [mainColor, setMainColor] = React.useState("#3B79B7");
+    const [mainColor, setMainColor] = React.useState<string|undefined>(undefined);
 
     React.useEffect(() => {
         const cachedColor = sessionStorage.getItem(STORAGE_KEY);

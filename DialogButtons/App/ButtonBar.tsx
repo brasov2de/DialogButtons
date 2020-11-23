@@ -3,6 +3,7 @@ import {Stack} from '@fluentui/react/lib/Stack';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
 import {DefaultButton } from '@fluentui/react/lib/Button'; 
 import { useColors } from './useColors';
+import { mergeStyles } from '@fluentui/react/lib/Styling';
 
 
 
@@ -33,17 +34,17 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
         }).filter(Boolean);
         return values.length===0 ? undefined : values;
     }
-
+    const mainColor = useColors(webAPI)?.mainColor;
     const disabledBtns = parseButtonsInput(disabledButtons);
     const visibleBtns = parseButtonsInput(visibleButtons);
     const whiteBtns = parseButtonsInput(whiteButtons)
+
    
     return <Stack horizontal wrap horizontalAlign={align==="LEFT" ? "start" : (align==="CENTER" ? "center" : "end" ) } tokens={{childrenGap: "1%", padding: "5px"}} style={{marginTop: "20px"}}>
         {options.map((option) => {
              const handleClick = React.useCallback(() => {
                 setValue(option.Value);
-            },[]);
-            const mainColor = useColors(webAPI)?.mainColor;
+            },[]);           
             const getStyles = (color : string | undefined, primary: boolean) => {
                 if(color===undefined){
                     return undefined;
@@ -57,23 +58,27 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                     color: primary === true ? undefined : color,
                     borderColor: color
                 }
-                return {   
-                    root: { 
-                       ...baseStyleOrWhite                        
-                    },                     
-                    rootHovered: {                         
-                           ...baseStyle,
-                            filter: "brightness(85%)",
-                            selectors: {
-                                ":active": {  
-                                    ...baseStyle,
-                                    filter: "brightness(75%)",
-                                }
-                            }
-
-                    }
-                   
-                }
+                return mergeStyles(baseStyleOrWhite, {   
+                        selectors: {                 
+                        ":active": {                              
+                            ...baseStyle,                           
+                            filter: "brightness(75%)",
+                        }, 
+                        ":visited": {  
+                            ...baseStyle,                            
+                            filter: "brightness(75%)",
+                        }, 
+                        ":hover": {  
+                            ...baseStyle,                            
+                            filter: "brightness(75%)",
+                        },  
+                        ":disabled": {  
+                            backgroundColor: "white", 
+                            color: "gray", 
+                            borderColor: "gray"
+                        }         
+                    }                                                                   
+                })
             }
             if( visibleBtns === undefined || visibleBtns.includes(option.Value)) {
                 let primary = true;
@@ -87,7 +92,7 @@ export const ButtonBar = React.memo(function ButtonBarComponent({options, visibl
                     text={option.Label}
                     value = {option.Value}            
                     onClick={handleClick}                               
-                    styles={getStyles(color ?? mainColor, primary)}
+                    className={getStyles(color ?? mainColor, primary)}
                     iconProps={ {iconName: icons[option.Value]}}                          
                     disabled={disabledBtns!=undefined && disabledBtns?.includes(option.Value)}
                 />
