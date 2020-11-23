@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="ORBIS" constructor="DialogButtons" version="0.0.1" display-name-key="DialogButtons" description-key="DialogButtons description" control-type="standard">
+  <control namespace="ORBIS" constructor="DialogButtons" version="0.0.2" display-name-key="DialogButtons" description-key="DialogButtons description" control-type="standard">
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
     <property name="buttons" display-name-key="Buttons" description-key="Options for the buttons" of-type="OptionSet" usage="bound" required="true" />  
     <property name="visibleButtons" display-name-key="Visible buttons" description-key="The buttons that should be visible" of-type="SingleLine.Text" usage="input" required="false" />
